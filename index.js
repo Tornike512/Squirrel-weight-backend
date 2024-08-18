@@ -17,6 +17,17 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
+app.get("/send", async (req, res) => {
+  try {
+    const ipAddress = await Ip.find();
+    res.setHeader("Content-Type", "application/json");
+    res.json(ipAddress);
+  } catch (error) {
+    console.error("Error retrieving IPs:", error);
+    res.sendStatus(500);
+  }
+});
+
 app.post("/send", async (req, res) => {
   try {
     const clientIp = req.clientIp;
@@ -27,16 +38,6 @@ app.post("/send", async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     console.error("Error saving IP:", error);
-    res.sendStatus(500);
-  }
-});
-
-app.get("/send", async (req, res) => {
-  try {
-    const ipAddress = await Ip.find();
-    res.json(ipAddress);
-  } catch (error) {
-    console.error("Error retrieving IPs:", error);
     res.sendStatus(500);
   }
 });
