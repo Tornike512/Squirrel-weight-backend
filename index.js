@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(requestIp.mw());
 
 mongoose
-  .connect("mongodb://localhost:27017/squirrel", {})
+  .connect(process.env.MONGODB_URI, {})
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
