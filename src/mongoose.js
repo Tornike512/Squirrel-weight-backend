@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ipSchema = new mongoose.Schema({
-  ipAddress: { type: String, required: true },
+  ipAddress: { type: String, required: false },
   timestamp: { type: Date, default: Date.now },
 });
 
