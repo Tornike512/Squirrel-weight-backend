@@ -1,24 +1,31 @@
 const express = require("express");
-const app = express();
+const fs = require("fs");
+const path = require("path");
 const requestIp = require("request-ip");
+const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
-const mongoose = require("mongoose");
-const Ip = require("./src/mongoose");
+
+const filePath = path.join(__dirname, "ips.json"); // Path to your JSON file
 
 app.use(express.json());
 app.use(cors());
 app.use(requestIp.mw());
 
-mongoose.connect("mongodb://localhost:27017/squirrel", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
 app.use(async (req, res, next) => {
   try {
-    await Ip.create({ ipAddress: req.clientIp });
-    console.log("IP Address saved:", req.clientIp);
+    const ip = req.clientIp;
+    let data = [];
+    if (fs.existsSync(filePath)) {
+      const fileData = fs.readFileSync(filePath);
+      data = JSON.parse(fileData);
+    }
+
+    data.push({ ip });
+
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+
+    console.log("IP Address saved:", ip);
   } catch (error) {
     console.error("Error saving IP address:", error);
   }
@@ -30,5 +37,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Listening");
+  console.log("Listening on port", PORT);
 });
