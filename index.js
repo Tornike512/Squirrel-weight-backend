@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const requestIp = require("request-ip");
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 app.use(requestIp.mw());
 
