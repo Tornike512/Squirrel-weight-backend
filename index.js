@@ -17,7 +17,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-app.get("/send", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const ipAddress = await Ip.find();
     res.setHeader("Content-Type", "application/json");
@@ -28,7 +28,7 @@ app.get("/send", async (req, res) => {
   }
 });
 
-app.post("/send", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const clientIp = req.clientIp;
     console.log(clientIp, "client ip");
