@@ -15,10 +15,7 @@ app.use(requestIp.mw());
 let isConnected;
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI, {})
   .then(() => {
     console.log("MongoDB connected");
     isConnected = true;
@@ -63,4 +60,8 @@ app.post("/", async (req, res) => {
     console.error("Error saving IP:", error);
     res.sendStatus(500);
   }
+});
+
+app.listen(PORT, () => {
+  console.log("listening");
 });
