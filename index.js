@@ -7,7 +7,6 @@ const Ip = require("./src/mongoose.js");
 const requestIp = require("request-ip");
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
-const Vote = require("./src/vote.js");
 
 app.use(express.json());
 app.use(cors());
@@ -63,36 +62,6 @@ app.post("/", async (req, res) => {
   } catch (error) {
     console.error("Error saving IP:", error);
     res.sendStatus(500);
-  }
-});
-
-app.get("/vote", async (req, res) => {
-  await ensureMongoDBConnection();
-  const color = await Vote.find();
-  res.setHeader("Content-Type", "application/json");
-  res.json(color);
-});
-
-app.post("/vote", async (req, res) => {
-  await ensureMongoDBConnection();
-  const { color } = req.body;
-
-  if (!["green", "red"].includes(color)) {
-    return res.status(400).json({ message: "Invalid color choice" });
-  }
-
-  try {
-    const existingColor = await Vote.findOne({ color });
-
-    if (!existingColor) {
-      const newVote = new Vote({ color });
-      await newVote.save();
-    }
-
-    res.status(201).json({ message: "Vote recorded successfully" });
-  } catch (error) {
-    console.error("Error saving vote:", error);
-    res.status(500).json({ message: "Server error" });
   }
 });
 
