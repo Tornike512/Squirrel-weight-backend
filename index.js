@@ -52,9 +52,9 @@ app.post("/", async (req, res) => {
     await ensureMongoDBConnection();
     const clientIp = req.clientIp;
     console.log(clientIp, "client ip");
-    const ipAddress = await Ip.find();
+    const existingIp = await Ip.findOne({ ipAddress: clientIp });
 
-    if (!ipAddress.includes(clientIp)) {
+    if (!existingIp) {
       await Ip.create({ ipAddress: clientIp });
     }
 
