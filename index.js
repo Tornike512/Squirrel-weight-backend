@@ -10,7 +10,7 @@ const Vote = require("./src/color.js");
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5174" }));
 app.use(requestIp.mw());
 
 let isConnected = false;
@@ -68,10 +68,6 @@ app.post("/vote", async (req, res) => {
     const { color, ipAddress } = req.body;
     const clientIp = req.clientIp;
 
-    if (!color || !["green", "red"].includes(color)) {
-      return res.status(400).send("Invalid color.");
-    }
-
     // if (!ipAddress) {
     //   return res.status(400).send("IP address is required.");
     // }
@@ -88,7 +84,7 @@ app.post("/vote", async (req, res) => {
     const formattedResponse = {
       _id: newVote._id.toString(),
       color: newVote.color,
-      ipAddress: Ip.ipAddress,
+      ipAddress: newIp.ipAddress,
       timestamp: newVote.timestamp.toISOString(),
       __v: newVote.__v,
     };
