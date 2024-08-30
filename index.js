@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(
   cors({
     origin:
-      "https://66d1d7412d36e53c47d4610c--regal-hamster-6787ce.netlify.app",
+      "https://66d1d9c5ad8823aaa8de7a08--regal-hamster-6787ce.netlify.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
