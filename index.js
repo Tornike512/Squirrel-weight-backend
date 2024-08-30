@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://66d2166289fa9d326c49d686--magnificent-tapioca-590dc0.netlify.app/",
+  "https://66d2166289fa9d326c49d686--magnificent-tapioca-590dc0.netlify.app",
 ];
 app.use(
   cors({
