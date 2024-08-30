@@ -12,11 +12,13 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin:
+      "https://66d1d7412d36e53c47d4610c--regal-hamster-6787ce.netlify.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 app.use(requestIp.mw());
 
 let isConnected = false;
