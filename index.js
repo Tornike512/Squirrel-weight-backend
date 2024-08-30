@@ -10,10 +10,13 @@ const Vote = require("./src/color.js");
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://66d2166289fa9d326c49d686--magnificent-tapioca-590dc0.netlify.app/",
+];
 app.use(
   cors({
-    origin:
-      "https://66d1d9c5ad8823aaa8de7a08--regal-hamster-6787ce.netlify.app",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
